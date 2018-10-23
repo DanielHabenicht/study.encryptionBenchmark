@@ -25,16 +25,15 @@ def gen(files: list):
 def generateFile(sizeInMB: int, path: str):
     file = open(path + f'/{sizeInMB:g}MB.dat', "w")
 
-    file.write(generateRandomString(sizeInMB, seed))
+    file.write(generateRandomString(sizeInMB * pow(2, 20), seed))
 
     file.close()
 
 
-# size in MB
 def generateRandomString(size, seed=None):
     if seed != None:
         random.seed(seed)
-    return(''.join(random.choice(string.ascii_letters) for i in range(size * pow(2, 20))))
+    return(''.join(random.choice(string.ascii_letters) for i in range(size)))
 
 
 def pow(x: int, y: int) -> int:

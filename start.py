@@ -3,33 +3,44 @@ import time
 import generateFiles
 import out_file
 from encryption import des3, des, AEScbc, AESctr, AESecb, rc4
+from classes import Test
+from Cryptodome.Random import get_random_bytes
+from Cryptodome.Cipher import DES3
+from generateFiles import generateRandomString
 
-filesSizes = [1, 10, 100]
+
+desKey = generateRandomString(8)
+key128bit = generateRandomString(16)
+
+while True:
+    try:
+        des3parityKey = DES3.adjust_key_parity(
+            generateRandomString(16).encode("utf-8")).decode("utf-8")
+        break
+    except ValueError:
+        pass
 
 print('Setting up Test')
-generateFiles.gen(filesSizes)
+out_file.clear()
 
 algorithms = [
-    ("DES", des),
-    ("DES3", des3),
-    ("AES_CBC", AEScbc),
-    ("AES_CTR", AESctr),
-    ("AES_ECB", AESecb),
-    ("RC4", rc4)
+    Test("DES", des, desKey, "none", []),
+    Test("DES3", des3, des3parityKey, "none", []),
+    Test("AES_CBC", AEScbc, key128bit, "none", []),
+    Test("AES_CTR", AESctr, key128bit, "none", []),
+    Test("AES_ECB", AESecb, key128bit, "none", []),
+    Test("RC4", rc4, key128bit, "none", [])
 ]
+filesSizes = [1, 10, 100]
+iterations = 10
+generateFiles.gen(filesSizes)
 
-for alg in algorithms:
-    times = test_enc.testEncrypt("test", filesSizes, alg)
-    print(f'{times.times[1]-times.times[0]:.5f} seconds')
 
+for testCase in algorithms:
+    doneTestCase = test_enc.testEncrypt(testCase, filesSizes, iterations)
+    print(
+        f'{doneTestCase.testRuns[0].timeSumMedian():.5f} seconds')
+    out_file.writeTestToFile(doneTestCase)
 
-matrix = [
-    [0,   0.1,      "hoge", True,   0,      "2017-01-01 03:04:05+0900"],
-    [2,   "-2.23",  "foo",  False,  None,   "2017-12-23 45:01:23+0900"],
-    [3,   0,        "bar",  "true",  "inf", "2017-03-03 33:44:55+0900"],
-    [-10, -9.9,     "",     "FALSE", "nan", "2017-01-01 00:00:00+0900"],
-]
-
-out_file.write_file(matrix)
 
 # print(f'{times[1]-times[0]:.5f} seconds')
