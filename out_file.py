@@ -33,3 +33,15 @@ def writeTestToFile(test: Test):
     f.write('\n')
 
     f.close()
+
+
+def writeSummary(testCases: list):
+    f = open("results.md", "a")
+    f.write("\n\n # Summary\n")
+    f.write(
+        f'| Algorithm | Median ({testCases[0].testRuns[0].fileSize:g}KB) | Median ({testCases[0].testRuns[1].fileSize:g}KB) | Median ({testCases[0].testRuns[2].fileSize:g}KB) |\n')
+    f.write('|:-------:|:--------------:|:--------------:|:--------:|:----:|\n')
+
+    for testCase in testCases:
+        f.write(
+            f'| {testCase.name:s} | {testCase.testRuns[0].timeSumMedian():0.5f} | {testCase.testRuns[1].timeSumMedian():0.5f} | {testCase.testRuns[2].timeSumMedian():0.5f} |\n')

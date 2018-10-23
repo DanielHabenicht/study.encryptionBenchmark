@@ -32,15 +32,17 @@ algorithms = [
     Test("RC4", rc4, key128bit, "none", [])
 ]
 filesSizes = [1, 10, 100]
-iterations = 10
+iterations = 20
 generateFiles.gen(filesSizes)
 
 
-for testCase in algorithms:
+for index, testCase in enumerate(algorithms):
     doneTestCase = test_enc.testEncrypt(testCase, filesSizes, iterations)
     print(
         f'{doneTestCase.testRuns[0].timeSumMedian():.5f} seconds')
     out_file.writeTestToFile(doneTestCase)
+    algorithms[index] = doneTestCase
 
+out_file.writeSummary(algorithms)
 
-# print(f'{times[1]-times[0]:.5f} seconds')
+print('Wrote results to "./results.md"!')
