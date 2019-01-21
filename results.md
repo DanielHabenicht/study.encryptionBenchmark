@@ -499,11 +499,14 @@ Nonce: none
 
 
  # Summary
+ 
 | Algorithm | Median (1024KB) | Median (10240KB) | Median (102400KB) |
-|:-------:|:--------------:|:--------------:|:--------:|:----:|
-| DES | 0.04880 | 0.46984 | 4.72846 |
-| DES3 | 0.10245 | 1.00223 | 10.14810 |
-| AES_CBC | 0.02020 | 0.18560 | 1.84923 |
-| AES_CTR | 0.01620 | 0.15315 | 1.52827 |
-| AES_ECB | 0.01440 | 0.13835 | 1.41717 |
-| RC4 | 0.02280 | 0.20465 | 2.04419 |
+| :-------: | :-------------: | :--------------: | :---------------: |
+|    DES    |     0.04880     |     0.46984      |      4.72846      |
+|   DES3    |     0.10245     |     1.00223      |     10.14810      |
+|  AES_CBC  |     0.02020     |     0.18560      |      1.84923      |
+|  AES_CTR  |     0.01620     |     0.15315      |      1.52827      |
+|  AES_ECB  |     0.01440     |     0.13835      |      1.41717      |
+|    RC4    |     0.02280     |     0.20465      |      2.04419      |
+
+Aus den Testergebnisssen ist abzuleiten, dass der schnellste Verschlüsselungsalgorithmus `AES_ECB` ist. Für alle drei Testgrößen braucht er am kürzesten. Dicht dahinter liegen die Algorithmen `AES_CTR`, `AES_CBC` und `RC4`. Etwas weiter abgeschlagen ist der einfache `DES` Algorithmus. Am längsten braucht `DES3`, wobei anzumerken ist, dass er weniger als die dreifache Zeit des `DES` Algorithmus braucht.
